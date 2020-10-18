@@ -3,10 +3,10 @@
 name=`basename $0`
 if [ $name = scramble ]
 then
-        USAGE="$name filename - encrypt filename, place output into filename.enc"
+        USAGE="$name filename\n\tencrypt filename, place output into filename.enc"
         
 else
-        USAGE="$name filename - decrypt filename.enc, place output into filename"
+        USAGE="$name filename\n\tdecrypt filename.enc, place output into filename"
 fi
 
 function isreadable {
@@ -20,7 +20,7 @@ function isreadable {
 
 if  [ "$1" = "-help" ] || [ "$1" = "" ] 
 then
-        echo $USAGE
+        echo -e $USAGE
         exit 1
 fi
 
