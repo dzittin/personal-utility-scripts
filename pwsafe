@@ -1,0 +1,42 @@
+#! /bin/bash
+
+file=passwords
+cd ~/.etc
+
+function usage {
+        echo "`basename $0`: [-ae]
+        -a key password (add password assoc with key)
+        -e key  (extract passwd assoc with key)
+        -d (dump a clear text file in ~/.etc)"
+        exit 1
+}
+
+trap "rm -f $file" SIGINT
+case "$1" in
+        -a | add)
+                shift
+                if [ $# != 2 ]
+                then
+                    usage 
+                fi
+                unscramble $file
+                echo "$1 $2" >> $file
+                scramble $file
+                ;;
+                
+        -e | extract)
+                cd ~/.etc
+                shift
+                unscramble $file 
+                egrep -i "$1" $file
+                ;;
+
+        -d | dump)
+                cd ~/.etc
+                unscramble $file
+                ;;
+
+        *)
+                usage
+                ;;
+esac

@@ -1,0 +1,56 @@
+#! /bin/sh
+# Record temperature of Raspberry Pi
+# Sleep between each record
+# Use:
+#    heat [-r]
+# heat with no args: print the minumum and the max heat recorded
+# -r print min and max, but also remove the record file and start
+# again. This cmd prints "date time temp" records into $datafile.
+# This was done in case it was desired to graph temp over time
+
+datafile=$HOME/.local/bin/heat_record
+
+if [ -r $datafile ]
+then
+    awk\
+     'BEGIN{min=1000;max=-1}
+        $3 > max {maxcnt=0; maxline=$0; max=$3}\
+        max == $3 {maxcnt++}\
+        $3 < min{mincnt=0; minline=$0; min=$3}\
+        min == $3 {mincnt++}\
+      END{\
+           printf("Records=%d\n\t(n=%d) %-17s (n=%d) %-14s\n", NR, mincnt, "Low", maxcnt, "High")
+           print minline," | ", maxline\
+      }' $datafile
+fi
+
+process_file=$HOME/.local/.heat_process
+
+case "$1" in
+   "-r") 
+        if [ -r $datafile ]
+        then
+                rm $datafile
+        fi
+
+        if [ -r $process_file ]
+        then
+                process=`cat $process_file`
+                kill $process
+        fi
+        (
+           while true
+           do
+             eval `date '+month=%m day=%d hour=%H minute=%M second=%S'`
+             (
+             echo -n "$month/$day $hour:$minute:$second "
+             /opt/vc/bin/vcgencmd measure_temp |\
+                sed -e 's/temp=//' -e "s/'.*$//"
+             ) >> $datafile
+             sleep 120 # Constant 2 mins. Could be a cmd arg?
+           done
+        ) &
+        echo $! > $process_file
+        ;;
+esac
+

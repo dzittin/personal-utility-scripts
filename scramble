@@ -1,0 +1,44 @@
+#! /bin/bash
+
+name=`basename $0`
+if [ $name = scramble ]
+then
+        USAGE="$name file - encrypt file and write into file.enc"
+        
+else
+        USAGE="$name file - decrypt file file.enc"
+fi
+
+function isreadable {
+        [ -r $1 ]
+        if [ $? -ne 0 ]
+        then
+            echo "Can't find file '$1'"
+            exit 1
+        fi
+}
+
+case $name in
+    scramble) 
+        isreadable "$1"
+        rm $1.enc
+        gpg --output $1.enc  --encrypt --recipient dzittin@gmail.com $1 2>/dev/null
+        echo "Encrypted file: $1.enc"
+        echo -n "Remove plain text file? (y/n)? "
+        read answ
+        if [ $answ = "y" ]
+        then
+            rm -f "$1"
+        fi
+        ;;
+
+   unscramble)
+        isreadable "$1.enc"
+        rm -f $1
+        gpg --output $1 --decrypt $1.enc 2>/dev/null
+        ;;
+
+    *) echo -e "$USAGE"
+       exit 1
+       ;;
+esac
