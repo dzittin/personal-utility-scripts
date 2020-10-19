@@ -8,6 +8,7 @@ Flags...\n
     -s: status\n
     -add: add a file(s) to local repository (you will be prompted)\n
     -init: Create a new local depository\n
+    -diff: Changes made in uncommitted files since last commit\n
     -pull: pull from remote repository\n
     -push: upload committed changes to repository\n
     -undo: replace changed files with recent unchanged versions\n
@@ -35,6 +36,9 @@ case "$1" in
 
     -push)  echo "Push changed files to remote"
             git push
+            ;;
+
+    -diff) git diff
             ;;
 
     -a | -add)
