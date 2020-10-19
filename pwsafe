@@ -13,7 +13,7 @@ function usage {
 
 trap "rm -f $file" SIGINT
 case "$1" in
-        -a | add)
+        -a | -add)
                 shift
                 if [ $# != 2 ]
                 then
@@ -24,15 +24,17 @@ case "$1" in
                 scramble $file
                 ;;
                 
-        -e | extract)
+        -e | -extract)
                 cd ~/.etc
                 shift
                 unscramble $file 
                 egrep -i "$1" $file
+                rm -f $file
                 ;;
 
-        -d | dump)
+        -d | -dump)
                 cd ~/.etc
+                echo "Readable passwd file in ~/.etc"
                 unscramble $file
                 ;;
 
