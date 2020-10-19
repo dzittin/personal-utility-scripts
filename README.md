@@ -1,5 +1,5 @@
 # Personal-local-bin-commands
-Personal Linux Commands
+# Personal Linux Commands
 
 Heat:
     Usage: heat [-r]
