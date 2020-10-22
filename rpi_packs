@@ -1,0 +1,19 @@
+#! /bin/bash
+
+USAGE='-u : update (update and upgrade)
+-r : autoremove (unneeded packages)'
+
+case "$1" in
+        -u | -update)
+                sudo apt-get update
+                sudo apt-get upgrade
+                ;;
+
+        -r | autoremove)
+                sudo apt autoremove
+                ;;
+
+        *)
+                echo "$USAGE"
+                ;;
+esac
