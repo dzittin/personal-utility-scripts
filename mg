@@ -38,7 +38,9 @@ case "$1" in
             git push
             ;;
 
-    -diff) git diff
+    -diff) 
+            shift
+            git diff "$1"
             ;;
 
     -a | -add)
