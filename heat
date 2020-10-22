@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 # Record temperature of Raspberry Pi
 # Sleep between each record
 # Use:
@@ -10,8 +10,17 @@
 
 datafile=$HOME/.local/bin/heat_record
 
+function get_heat {
+     eval `date '+month=%m day=%d hour=%H minute=%M second=%S'`
+     echo -n "$month/$day $hour:$minute:$second "
+     /opt/vc/bin/vcgencmd measure_temp |\
+        sed -e 's/temp=//' -e "s/'.*$//"
+}
+
 if [ -r $datafile ]
 then
+    echo -n "Current temperature="
+    get_heat | awk '{print $3 "C"}'
     awk\
      'BEGIN{min=1000; max=-1}
         NR == 1 {rec1 = $1"-"$2}
@@ -29,6 +38,7 @@ fi
 
 process_file=$HOME/.local/.heat_process
 
+
 case "$1" in
    "-r") 
         if [ -r $datafile ]
@@ -44,11 +54,8 @@ case "$1" in
         (
            while true
            do
-             eval `date '+month=%m day=%d hour=%H minute=%M second=%S'`
              (
-             echo -n "$month/$day $hour:$minute:$second "
-             /opt/vc/bin/vcgencmd measure_temp |\
-                sed -e 's/temp=//' -e "s/'.*$//"
+                 get_heat
              ) >> $datafile
              sleep 120 # Constant 2 mins. Could be a cmd arg?
            done
