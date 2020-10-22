@@ -27,7 +27,7 @@ fi
 case $name in
     scramble) 
         isreadable "$1"
-        rm $1.enc
+        rm -f $1.enc
         gpg --output $1.enc  --encrypt --recipient dzittin@gmail.com $1 2>/dev/null
         echo "Encrypted file: $1.enc"
         echo -n "Remove plain text file? (y/n)? "
