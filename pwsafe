@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# A klutzy password manager until I can find a good one
+# that works on the Raspberry pi
+
 file=passwords
 
 madedir=false
