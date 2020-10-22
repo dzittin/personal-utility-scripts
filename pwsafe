@@ -1,7 +1,20 @@
 #! /bin/bash
 
 file=passwords
+
+madedir=false
+if [ ! -r ~/.etc ]
+then
+    mkdir ~/.etc
+    madedir=true
+
+fi
+
 cd ~/.etc
+case $madedir in
+    true) > passwords.enc
+            ;;
+esac
 
 function usage {
         echo "`basename $0`: [-ae]
@@ -13,6 +26,7 @@ function usage {
 }
 
 trap "rm -f $file" SIGINT
+
 case "$1" in
         -a | -add)
                 shift
