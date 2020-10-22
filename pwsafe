@@ -7,6 +7,7 @@ function usage {
         echo "`basename $0`: [-ae]
         -a key password (add password assoc with key)
         -e key  (extract passwd assoc with key)
+        -l (list the keys on stdout)
         -d (dump a clear text file in ~/.etc)"
         exit 1
 }
@@ -28,7 +29,15 @@ case "$1" in
                 cd ~/.etc
                 shift
                 unscramble $file 
-                egrep -i "$1" $file
+                egrep -i "$1" $file | awk '{print $2}' | cpy
+                rm -f $file
+                echo "passwd in cut buffer" > /dev/stdout
+                ;;
+        -l | -list)
+                cd ~/.etc
+                shift
+                unscramble $file
+                awk '{print $1}' $file
                 rm -f $file
                 ;;
 
