@@ -49,3 +49,14 @@ unscramble:
     Scramble should be in the same directory as a symbolic link
     pointing to it named "unscramble". Invoking unscramble causes
     the encrypted file to be decrypted.
+
+--------------------
+
+raspack:
+    Manage packages, add, remove, update, etc
+
+--------------------
+
+cpy:
+   Usage: cpy filename
+   Copies the contents of a file into the clipboard 
