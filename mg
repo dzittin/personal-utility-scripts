@@ -7,13 +7,13 @@ Flags...\n
     -c: commit changes\n
     -s: status\n
     -add: add a file(s) to local repository (you will be prompted)\n
-    -init: Create a new local depository\n
-    -diff: Changes made in uncommitted files since last commit\n
+    -init: create a new local depository\n
+    -diff: changes made in uncommitted files since last commit\n
     -pull: pull from remote repository\n
     -push: upload committed changes to repository\n
     -undo: replace changed files with recent unchanged versions\n
     -initremote: Connect existing remote respository to local repository\n
-    -rm filename: remove filename from local git repository, don't destoy local copy\n
+    -rm filename: remove filename from local git repository, next push removes file from remote\n
     -ls: print list of all files in local repository"
 
 
@@ -36,7 +36,7 @@ case "$1" in
     -pull)  git pull
             ;;
 
-    -push)  echo "Push changed files to remote"
+    -push)
             git push
             ;;
 
@@ -68,6 +68,12 @@ case "$1" in
         fi
         git rm --cached "$1"
         git commit -m "removed $1"
+        echo -n "Remove from remote repository (y/n)? "
+        read answ
+        if [ $answ = "y" ]
+        then
+            git push
+        fi
         ;;
 
 
