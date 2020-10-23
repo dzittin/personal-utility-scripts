@@ -12,7 +12,9 @@ Flags...\n
     -pull: pull from remote repository\n
     -push: upload committed changes to repository\n
     -undo: replace changed files with recent unchanged versions\n
-    -initremote: Connect existing remote respository to local repository"
+    -initremote: Connect existing remote respository to local repository\n
+    -rm filename: remove filename from local git repository, don't destoy local copy\n
+    -ls: print list of all files in local repository"
 
 
 case "$1" in
@@ -57,6 +59,18 @@ case "$1" in
                 done
             ;;
 
+    -rm)
+        shift
+        if [ "$#" != 1 ]
+        then
+            echo "Expecting argument specifying file to remove"
+            exit 1
+        fi
+        git rm --cached "$1"
+        git commit -m "removed $1"
+        ;;
+
+
     -undo)  echo -n "Replace changed files with head files?"
             read answ
             case "$answ" in
@@ -70,6 +84,10 @@ case "$1" in
             git branch -M main
             git push -u origin main
                  ;;
+
+    -ls)
+          git ls-files
+          ;;
 
 
     *|-help) echo -e $USAGE;; 
