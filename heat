@@ -49,7 +49,11 @@ case "$1" in
         if [ -r $process_file ]
         then
                 process=`cat $process_file`
-                kill $process
+                ps $process > /dev/null
+                if [ $? = 0 ]
+                then
+                    kill $process
+                fi
         fi
         (
            while true
