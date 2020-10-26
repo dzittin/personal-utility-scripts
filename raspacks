@@ -3,7 +3,9 @@
 USAGE='-u : update (update and upgrade)
 -autorm : autoremove (unneeded packages)
 -i package : install package
--reinstall : force a reinstall of package with latest rev'
+-reinstall : force a reinstall of package with latest rev
+-ls : List all installed packages
+-rm packagename : Remove packagename from system'
 
 
 case "$1" in
@@ -15,6 +17,7 @@ case "$1" in
         -u | -update)
                 sudo apt-get update
                 sudo apt-get upgrade
+                sudo apt autoremove
                 ;;
 
         -autorm | autoremove)
@@ -23,6 +26,15 @@ case "$1" in
 
         -reinstall)
                 sudo reinstall
+                ;;
+
+        -ls)
+                dpkg -l
+                ;;
+
+        -rm)
+                shift
+                sudo apt remove "$1"
                 ;;
 
         *)
