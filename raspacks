@@ -11,12 +11,16 @@ USAGE='-u : update (update and upgrade)
 case "$1" in
         -i | install)
                 shift
-                sudo apt install $1
+                sudo apt-get install $1
                 ;;
 
+	-df)
+		df -h 	# To determine how much disk space is free
+		;;
+
         -u | -update)
-                sudo apt-get update
-                sudo apt-get upgrade
+                sudo apt-get update    		# Update paclage list
+                sudo apt-get full-upgrade   	# Full-update for dependencies
                 sudo apt autoremove
                 ;;
 
