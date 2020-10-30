@@ -77,7 +77,7 @@ case "$1" in
         ;;
 
 
-    -undo)  echo -n "Replace changed files with head files?"
+    -undo)  echo -n "Replace changed files with head files? "
             read answ
             case "$answ" in
                  y | yes ) git checkout;;
