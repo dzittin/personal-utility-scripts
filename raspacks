@@ -5,11 +5,19 @@ USAGE='-u : update (update and upgrade)
 -i package : install package
 -reinstall : force a reinstall of package with latest rev
 -ls : List all installed packages
--rm packagename : Remove packagename from system'
+-rm packagename : Remove packagename from system
+-df : a df -h to show free disk space'
+
+function update {
+	sudo apt-get update    		# Update paclage list
+	sudo apt-get full-upgrade   	# Full-update for dependencies
+	sudo apt autoremove
+}
 
 
 case "$1" in
         -i | install)
+		update
                 shift
                 sudo apt-get install $1
                 ;;
@@ -19,9 +27,7 @@ case "$1" in
 		;;
 
         -u | -update)
-                sudo apt-get update    		# Update paclage list
-                sudo apt-get full-upgrade   	# Full-update for dependencies
-                sudo apt autoremove
+		update
                 ;;
 
         -autorm | autoremove)
