@@ -50,7 +50,7 @@ case "$1" in
                 rm -f $file
                 echo "passwd in cut buffer" > /dev/stdout
                 ;;
-        -l | -list)
+        -l | -ls | -list)
                 cd ~/.etc
                 shift
                 unscramble $file
