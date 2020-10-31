@@ -1,7 +1,6 @@
 # Function to print a string in a specified color.
 # Colors are specified by strings shown in the associative array
-# indices below.
-# Usage: ColorName "a string"
+# indices below.  Usage: ColorName "a string"
 
 function colors () {
 	if [ $# != 2 ]
