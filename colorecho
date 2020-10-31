@@ -33,11 +33,11 @@ function colors () {
 	then
 		echo -e ${Colors[$1]}$2${Colors[Off]}
 	else
-		echo "Do not recognize color: $1" >&2
+		echo "$0: Do not recognize the color '$1'." >&2
 	fi
 
 }
 
-#colors blah "hi there world"
-#colors BoldBlue "hi there world"
-#colors BoldYellow "hi there world"
+colors blah "hi there world"
+colors BoldBlue "hi there world"
+colors BoldYellow "hi there world"
