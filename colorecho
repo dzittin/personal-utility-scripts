@@ -1,3 +1,4 @@
+
 # Function to print a string in a specified color.
 # Colors are specified by strings shown in the associative array
 # indices below.  Usage: ColorName "a string"
@@ -17,6 +18,7 @@ function colors () {
 		[Blue]="\\033[0;34m"
 		[Purple]="\\033[0;35m"
 		[Cyan]="\\033[0;36m"
+
 		[DarkGray]="\\033[1;30m"
 		[BoldRed]="\\033[1;31m"
 		[BoldGreen]="\\033[1;32m"
@@ -27,5 +29,15 @@ function colors () {
 		[Off]="\033[0m" 	#Cancel color escape.
 	)
 
-	echo -e ${Colors[$1]} $2 ${Colors[Off]}
+	if [ ${Colors[$1]+x}  ]
+	then
+		echo -e ${Colors[$1]}$2${Colors[Off]}
+	else
+		echo "Do not recognize color: $1" >&2
+	fi
+
 }
+
+#colors blah "hi there world"
+#colors BoldBlue "hi there world"
+#colors BoldYellow "hi there world"
