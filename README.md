@@ -20,7 +20,7 @@ Heat:
 mg:
     Usage mg [flags - do mg -help]
 
-    A container script for git commands including init, commit,
+    A container script to make git commands easier including init, commit,
     status, push, pull, undo, remote initialization
 
 --------------------
@@ -60,3 +60,15 @@ raspack:
 cpy:
    Usage: cpy filename
    Copies the contents of a file into the clipboard 
+
+--------------------
+colorecho.sh: a bash include file implementing function "color"
+    Usage:  color [-n] ColorName String
+    -n: Don't follow string with a newline. Allows for a multi-colored line
+    ColorName: see the associative array in the .sh file
+    String: A quoted string to be printed.
+    example1: color BoldCyan "hi there world"
+    example1: color -n BoldCyan "hi"; color BoldYellow " there world"
+
+
+
