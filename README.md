@@ -3,6 +3,7 @@
 
 
 Heat:
+
     Usage: heat [-r]
         
     Without arguments heat reads through a data file with
@@ -18,6 +19,7 @@ Heat:
 --------------------
 
 mg:
+
     Usage mg [flags - do mg -help]
 
     A container script to make git commands easier including init, commit,
@@ -26,6 +28,7 @@ mg:
 --------------------
 
 pwsafe:
+
     Usage pwsafe [flags - do pwsafe -help ]
 
     A script to add lines to a file and crypt the file.
@@ -39,7 +42,9 @@ pwsafe:
 --------------------
 
 scramble:
+
 unscramble:
+
     Usage scramble filename
     Usage unscramble filename
 
@@ -53,16 +58,21 @@ unscramble:
 --------------------
 
 raspack:
+
     Manage packages, add, remove, update, etc
 
 --------------------
 
 cpy:
+
    Usage: cpy filename
+
    Copies the contents of a file into the clipboard 
 
 --------------------
+
 colorecho.sh: a bash include file implementing function "color"
+
     Usage:  color [-n] ColorName String
     -n: Don't follow string with a newline. Allows for a multi-colored line
     ColorName: see the associative array in the .sh file
