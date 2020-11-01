@@ -54,15 +54,3 @@ function colors () {
 
 }
 
-# Print three words on one line
-colors -n BoldYellow "hi"
-colors -n BoldCyan " there"
-colors BoldRed " world"
-
-echo -n "wc pipe test"; colors Purple "hi there world" | wc
-colors BoldBlue "hi there world blue"
-colors BoldYellow "hi there world yellow"
-colors BoldCyan "hi there world cyan"
-colors -n BoldCyan "hi there"
-colors -n BoldGreen  " world"
-colors BoldYellow " and sun"
