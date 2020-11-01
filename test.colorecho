@@ -1,0 +1,38 @@
+
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+. "$DIR/colorecho.sh"
+
+
+
+colors BoldBlue "Bright blue words"
+colors BoldRed "This is bright red"
+colors Red "This is dull red"
+echo -n "This should fail - too many args: "; colors hi there world we are fine
+if [ $? == 1 ]
+then
+	echo -e "assert : returned an error value=1\n"
+else
+	echo "Assert error, did not occur"
+fi
+echo -n "This should fail - no such color: "; colors foobar "this is a failure"
+if [ $? == 1 ]
+then
+	echo -e "assert : returned an error value=1\n"
+else
+	echo "Assert error, did not occur"
+fi
+echo -n "This should fail - too few arguments: "; colors
+if [ $? == 1 ]
+then
+	echo -e "assert : returned an error value=1\n"
+else
+	echo "Assert error, did not occur"
+fi
+
+# Print different colors, same line
+
+echo "Assert: Hi there world (Red, Green, Cyan) on same line"
+colors -n BoldRed "Hi"
+colors -n BoldGreen " there"
+colors BoldCyan " world."
