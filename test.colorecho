@@ -1,38 +1,33 @@
-
+# include colorecho.sh
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 . "$DIR/colorecho.sh"
 
 
+str="hi there world"
 
-colors BoldBlue "Bright blue words"
-colors BoldRed "This is bright red"
-colors Red "This is dull red"
-echo -n "This should fail - too many args: "; colors hi there world we are fine
-if [ $? == 1 ]
-then
-	echo -e "assert : returned an error value=1\n"
-else
-	echo "Assert error, did not occur"
-fi
-echo -n "This should fail - no such color: "; colors foobar "this is a failure"
-if [ $? == 1 ]
-then
-	echo -e "assert : returned an error value=1\n"
-else
-	echo "Assert error, did not occur"
-fi
-echo -n "This should fail - too few arguments: "; colors
-if [ $? == 1 ]
-then
-	echo -e "assert : returned an error value=1\n"
-else
-	echo "Assert error, did not occur"
-fi
+echo -e "Test string: $str\n"
 
-# Print different colors, same line
+echo "print a newline, no text"
+colors  # newline only
 
-echo "Assert: Hi there world (Red, Green, Cyan) on same line"
-colors -n BoldRed "Hi"
-colors -n BoldGreen " there"
-colors BoldCyan " world."
+echo "print 'Test String' in cyan"
+colors -cyan "$str"
+colors
+
+echo "print 'Test String' underlined in bold cyan"
+colors -u -b -cyan "$str"
+colors
+
+echo "print 'Test String' in red"
+colors -red "$str"
+colors
+
+echo "print 'Test String' in bold red"
+colors -b -red "$str"
+colors
+
+echo "print one line using string 3 time, bold, using -n flag, green, red,  cyan"
+colors -n -b -green "$str"
+colors -n -b -red   " $str"
+colors    -b -cyan  " $str"
