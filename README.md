@@ -65,8 +65,7 @@ raspack:
 
 cpy:
 
-   Usage: cpy filename
-
+   Usage: cpy filename 
    Copies the contents of a file into the clipboard 
 
 --------------------
