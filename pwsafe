@@ -6,14 +6,16 @@
 file=passwords
 
 madedir=false
-if [ ! -r ~/.etc ]
+DataDir=~/.local/etc
+
+if [ ! -r $DataDir ]
 then
-    mkdir ~/.etc
+    mkdir $DataDir
     madedir=true
 
 fi
 
-cd ~/.etc
+cd $DataDir
 case $madedir in
     true) > passwords.enc
             ;;
