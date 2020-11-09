@@ -1,56 +1,81 @@
-# Function to print a string in a specified color on stdout.
-# Colors are specified by strings shown in the associative array
-# indices below.  Usage: ColorName "a string"
-# Usage: colors [-n] ColorName String
-# ColorNames are defined in associative array below
-# -n: no newline. Escape sequences will be translated as per the -e 
-# flag of the echo command.
+# To be used as a bash include script
+# Print text in color on stdout, underlined or bold. 
 
+# Usage: colors [-n] [-b] [-u] [-red|-green|-yellow|-blue|-purple|-cyan] quoted-string
+# -n: No newline printed after string
+# -b: bold
+# -u: underline
+# string must be quoted.
+@ Example:
+#	colors -b -u -cyan "hi there world"
+# prints the string "hi there world" underlined and bold cyan.
 
-declare -A _Colors=(
-	[Black]="\\033[0;30m"
-	[Red]="\\033[0;31m"
-	[Green]="\\033[0;32m"
-	[Yellow]="\\033[0;33m"
-	[Blue]="\\033[0;34m"
-	[Purple]="\\033[0;35m"
-	[Cyan]="\\033[0;36m"
+_MyBase='\033['
+_MyBold="1"
+_MyUnderline="4"
 
-	[DarkGray]="\\033[1;30m"
-	[BoldRed]="\\033[1;31m"
-	[BoldGreen]="\\033[1;32m"
-	[BoldYellow]="\\033[1;33m"
-	[BoldBlue]="\\033[1;34m"
-	[BoldPurple]="\\033[1;35m"
-	[BoldCyan]="\\033[1;36m"
-	[Off]="\033[0m" 	#Cancel color escape.
+declare -A _MyColors=(
+	[-red]="31"
+	[-green]="32"
+	[-yellow]="33"
+	[-blue]="34"
+	[-purple]="35"
+	[-cyan]="36"
 )
+
 
 function colors () {
 
-	nflag=
+	local nflag=
+	local escape=
+	local string
+	local bflag=
+	local uflag=
 
-	case "$1" in
-		-n) 
-			nflag=-n
-			shift
+	for i in "$@"
+	do
+		case $i in 
+		-red|-green|-yellow|-blue|-purple|-cyan)
+			escape=${escape}${_MyColors[$i]}
+			if [ "$bflag" != "" ]
+			then
+				escape=${escape}";"${_MyBold}	
+			fi
+			if [ "$uflag" != "" ]
+			then
+				escape=${escape}";"${_MyUnderline}
+			fi
 			;;
-	esac
+		-b)
+			bflag=1		#Bold flag
+			;;
 
-	if [ $# != 2 ]
-	then
-		echo Error: $0 in function ${FUNCNAME[0]}: \'${FUNCNAME[0]} ColorName String\'
-		return  1
-	fi
+		-n)
+			nflag=-n	#No newline flag
+			;;
+		-u)
+			uflag=1
+			;;
+		*)
+			string=$i
+			break
+			;;
+		esac
 
-	if [ ${_Colors[$1]+x}  ]
+		if [ "$escape" != "" ]
+		then
+			escape=${escape}';'
+		fi
+	done
+
+		
+	if [ "$escape" != "" ]
 	then
-		echo $nflag -e ${_Colors[$1]}$2${_Colors[Off]}
+		escape=$(echo $escape | sed 's/;$/m/')
+		echo -e  $nflag  ${_MyBase}"$escape""$string""\033[0m"
 	else
-		echo "$0: Do not recognize the color '$1'." >&2
-		return 1
+		echo $nflag $string
 	fi
-	return 0
-
+	return
 }
 
