@@ -6,7 +6,7 @@
 # -b: bold
 # -u: underline
 # string must be quoted.
-@ Example:
+# Example:
 #	colors -b -u -cyan "hi there world"
 # prints the string "hi there world" underlined and bold cyan.
 
